@@ -1,38 +1,29 @@
-name: Flutter Build
+name: Flutter Build APK
 
-# 当 push 到 main 分支或创建 PR 时触发构建
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main # 你可以指定任意分支，例如 master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: 检出代码
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Step 2: 设置 Flutter 环境
-    - name: Setup Flutter
+    - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
         flutter-version: 'stable'
 
-    # Step 3: 获取项目依赖
     - name: Install dependencies
       run: flutter pub get
 
-    # Step 4: 编译 APK
     - name: Build APK
       run: flutter build apk --release
 
-    # Step 5: 上传 APK
     - name: Upload APK
       uses: actions/upload-artifact@v2
       with:
